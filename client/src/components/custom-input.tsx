@@ -1,20 +1,27 @@
-type customInput = {
-  label: string;
-  placeholder: string;
-  error: string;
-  htmlFor: string;
-};
-export const CustomInput = ({
+import { customInput } from "./types";
+
+export const CustomInput: React.FC<customInput> = ({
   label,
   error,
   placeholder,
   htmlFor,
-}: customInput) => {
+  register,
+  name,
+  type = "text",
+  className = "flex flex-col",
+  ...props
+}) => {
   return (
-    <section className="flex flex-col">
+    <section className={className}>
       <label htmlFor={htmlFor}>{label}</label>
-      <input placeholder={placeholder} id={htmlFor} />
-      {error && <span className="text-red-600">{error}</span>}
+      <input
+        {...register(name)}
+        placeholder={placeholder}
+        id={htmlFor}
+        type={type}
+        {...props}
+      />
+      {error && <span className="text-red-600">{error.message}</span>}
     </section>
   );
 };
